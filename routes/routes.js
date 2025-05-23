@@ -1,11 +1,10 @@
 import express from "express"
 import * as Controllers from "../controllers/controllers.js"
-const router =express.Router()
+const notes =express.Router()
 
-router.get('/', Controllers.getnote)
-router.get('/:id', Controllers.getnoteById)
-router.post('/', Controllers.createnote)
-router.put('/:id',Controllers.updatenote)
-router.delete('/:id', Controllers.deletenote)
+notes.get('/', Controllers.getnote)
+notes.get('/:id', Controllers.getnoteById)
+notes.post('/', Controllers.createnote)
+notes.delete('/:id', Controllers.deletenote)
 
-export default router
+export default notes

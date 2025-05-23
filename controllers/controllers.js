@@ -31,22 +31,13 @@ export const createnote = async (req, res) => {
   const db = await dbPromise;
   const { title, content } = req.body;
 
-  const authorsArray = await db.run("SELECT authors FROM notes");
-
-  authorsArray.array.forEach(author => {
-      if (author = authors){
-        alert("There can be no notes with the same name!");
-        //abortolni kellene ezt a függvényt ez után
-      }
-  });
-
   if (!title || !content) {
     return res.status(400).json({ message: "Invalid input something" });
   }
 
   const result = await db.run(
     "INSERT INTO notes (title, content) VALUES (?, ?)",
-    [band, title, authors, releaseDate] 
+    [title, content] 
   );
 
   res.status(201).json({
@@ -56,54 +47,17 @@ export const createnote = async (req, res) => {
   });
 };
 
-
-export const updatenote = async (req, res) => {
-  const db = await dbPromise;
-  const id = parseInt(req.params.id);  // Use the database ID from the route params
-  const { title, content } = req.body;
-
-  // Validate input
-  if (!title || !content) {
-    return res.status(400).json({ message: "Invalid input something" });
-  }
-
-  // Check if the note with the provided ID exists in the database
-  const check = await db.get("SELECT * FROM notes WHERE id = ?", [id]);
-  if (!check) {
-    return res.status(404).json({ message: "note not found" });
-  }
-
-  // Update the note in the database
-  await db.run(
-    "UPDATE notes SET band = ?, title = ?, authors = ?, releaseDate = ? WHERE id = ?",
-    [band,title,authors,releaseDate, id]
-  );
-
-  // Return the updated note data in the response
-  res.status(201).json({
-    id: check.lastID,
-    band,
-    title,
-    authors,
-    releaseDate,
-  });
-};
-
-
 export const deletenote = async (req, res) => {
   const db = await dbPromise;
-  const id = parseInt(req.params.id);  // Use the database ID from the route params
+  const id = parseInt(req.params.id);  
 
-  // Check if the note with the provided ID exists in the database
   const check = await db.get("SELECT * FROM notes WHERE id = ?", [id]);
   if (!check) {
     return res.status(404).json({ message: "note not found" });
   }
 
-  // Delete the note from the database
   await db.run("DELETE FROM notes WHERE id = ?", [id]);
 
-  // Respond with a success message
   res.status(200).json({ message: "Delete successful" });
 };
 

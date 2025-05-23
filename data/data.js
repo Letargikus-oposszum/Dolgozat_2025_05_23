@@ -14,8 +14,8 @@ const seed = async () => {
     try {
       for (const entry of notes) {
         await db.run(`
-          INSERT INTO notes (band, title, authors, releaseDate)
-          VALUES (?, ?, ?, ?)`, 
+          INSERT INTO notes (title,content)
+          VALUES (?, ?)`, 
           [entry.title, entry.content,]);
       }
       console.log("notes seeded successfully!");
@@ -23,6 +23,4 @@ const seed = async () => {
       console.error("Error seeding notes:", err);
     }
   };
-  
-  seed();
-  
+    
