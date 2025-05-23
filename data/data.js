@@ -2,27 +2,25 @@
 
 import dbPromise from "../db/db";
 
-// zenekar, album címe és legyen még plusz két adat 
 const seed = async () => {
     const db = await dbPromise;
-    const albums = [
-      { band: "KISS", title: "I was made for lovin' you baby", authors: "Pityu, Béla, János", releaseDate: "1976.03.14" },
-      { band: "AC/DC", title: "Something good", authors: "Szakállvágó, OliVér", releaseDate: "1996.03.19" },
-      { band: "GermanDrugAddict", title: "I am the Horseman", authors: "Scooter", releaseDate: "2006.04.14" },
-      { band: "Despicable", title: "Tell me why", authors: "Ain, Nothing, But, A, Mistake", releaseDate: "2015.10.01" },
-      { band: "Me", title: "My guy", authors: "Half life-os budi", releaseDate: "2018.02.09" },
+    const notes = [
+      {title:"Trash",content:"Don't forget to take out the trash"},
+      {title:"Shopping",content:"Buy some milk and bread"},
+      {title:"Car washing",content:"Wash the Car"},
+      {title:"Hairdresser",content:"On may 25th you have an appointment to your hairdresser"},
     ];
-  
+    
     try {
-      for (const entry of albums) {
+      for (const entry of notes) {
         await db.run(`
-          INSERT INTO albums (band, title, authors, releaseDate)
+          INSERT INTO notes (band, title, authors, releaseDate)
           VALUES (?, ?, ?, ?)`, 
-          [entry.band, entry.title, entry.authors, entry.releaseDate]);
+          [entry.title, entry.content,]);
       }
-      console.log("Albums seeded successfully!");
+      console.log("notes seeded successfully!");
     } catch (err) {
-      console.error("Error seeding albums:", err);
+      console.error("Error seeding notes:", err);
     }
   };
   
